@@ -8,4 +8,4 @@ const second = readFileSync("./content/second.txt", "utf8")
 
 // If the file is not in this address, node will create one
 // If the file is in this address, node will overwrite its content
-writeFileSync("./content/result-sync.txt", `Over writing it now...`);
+writeFileSync("./content/result-sync.txt", " appending... ", {flag:"a"});
