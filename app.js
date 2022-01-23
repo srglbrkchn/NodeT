@@ -1,23 +1,9 @@
-// The last intial built in module => http module
-const http = require("http");
+const _ = require("lodash");
 
-// Creating the server
-const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    res.end("Welcom Boobile...");
-  }
-  if (req.url === "/about") {
-    res.end("Alittle bit about us...");
-  }
+const items = [1, [2, [3, 4, [5, 6]]]];
 
-  // If the page does not exist
-  res.end(`<h1>Oops!</h1>
-    <p> The page you are looking for does not exist here! </p>
-    <a href="/"> Back Home </a>`);
-});
+// Use lodash flattenDeep method to turn items array into a flat array
+const newItems = _.flattenDeep(items);
 
-
-// Make server listen to a port
-server.listen(3000, () => {
-  console.log("The server is up and running...");
-});
+console.log(newItems);
+console.log("Testing, messing...");
