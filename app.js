@@ -8,9 +8,14 @@ const EventEmitter = require("events");
 const customEmitter = new EventEmitter();
 
 // Use on method to listen/subscribe for an specific event
+customEmitter.on("response", (name, id)=>{
+  console.log(`Event triggered! calling ${name} ${id}`);
+});
+
+// We can have as many methods we would want on a same event:
 customEmitter.on("response", ()=>{
-  console.log(`Event triggered!`);
+  console.log(`Second Event triggered!`);
 });
 
 // Emit the specific event called response
-customEmitter.emit("response");
+customEmitter.emit("response", "Dodo", "007");
