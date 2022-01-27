@@ -1,0 +1,2 @@
+This is easy... hahaha Hi, I am in the first file :)
+ Hello from the second file :>
