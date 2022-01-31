@@ -1,6 +1,12 @@
 // Setting up the server
 const http = require("http");
+const {readFileSync} = require("fs");
 
+// Get all readFiles
+const homePage = readFileSync("./index.html");
+
+
+// set up the server
 const server = http.createServer((req, res) => {
   // Use .writeHead method to provide hedear/Meta data about our response
   // Using mime/media type
@@ -12,7 +18,7 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {
       "content-type": "text/html"
     });
-    res.write("<h1> Home page </h1>");
+    res.write(homePage);
     res.end();
   }
    // About page
