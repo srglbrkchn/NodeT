@@ -1,10 +1,12 @@
 // Setting up the server
 const express = require("express");
 const app = express();
+const path = require("path");
 
 
 app.get("/", (req, res)=> {
-
+  // sending absolute path using resolve method in path module
+  res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
 });
 
 
