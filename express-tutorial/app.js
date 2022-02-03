@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
+// Set up static and middleware using use verb
+app.use(express.static("./public"));
 
 app.get("/", (req, res)=> {
   // sending absolute path using resolve method in path module
