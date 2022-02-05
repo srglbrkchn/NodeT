@@ -39,6 +39,13 @@ app.get("/api/products/:productID", (req, res)=> {
   return res.json(singleProduct);
 });
 
+// query string params / URL params
+app.get("/api/v1/query", (req, res)=> {
+  // use req.query in order to access query access params
+  console.log(req.query);
+  res.send("It's getting complicated...")
+});
+
 app.get("/api/products/:productID/reviews/:reviewID", (req, res)=> {
   console.log(req.params);
   res.send("LOL means Laughing Out Loud!");
