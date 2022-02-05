@@ -61,6 +61,14 @@ app.get("/api/v1/query", (req, res)=> {
     sortedProducts = sortedProducts.slice(0, Number(limit));
   }
 
+  if(sortedProducts.length < 1) {
+    // request successful but there is no such data in the database
+    // res.status(200).send("The product you search does not exist...");
+
+    // Most common way to handle this issue
+    return res.status(200).json({success: true, data: []});
+  }
+
   res.status(200).json(sortedProducts);
 });
 
