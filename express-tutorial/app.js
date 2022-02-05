@@ -42,8 +42,26 @@ app.get("/api/products/:productID", (req, res)=> {
 // query string params / URL params
 app.get("/api/v1/query", (req, res)=> {
   // use req.query in order to access query access params
-  console.log(req.query);
-  res.send("It's getting complicated...")
+
+  // Creating new instanses of our product based on query string parameters
+  let sortedProducts = [...products];
+
+  // Destructuring the query string parameters sent by the user
+  const {search, limit} = req.query;
+
+  // Filter by search entery
+  if(search) {
+    sortedProducts = sortedProducts.filter((product)=>{
+      return product.name.startsWith(search);
+    });
+  }
+
+  // Filter by number of desired result
+  if(limit) {
+    sortedProducts = sortedProducts.slice(0, Number(limit));
+  }
+
+  res.status(200).json(sortedProducts);
 });
 
 app.get("/api/products/:productID/reviews/:reviewID", (req, res)=> {
