@@ -5,7 +5,9 @@ const app = express();
 const logger = require("./logger.js");
 
 // app.use applies the middleware to all the routes
-app.use(logger);
+// if we specify a path here, it becomes the root of the path that invokes the middleware function
+// and the middleware function only be executed if the base of requested path matches the path
+app.use("/api", logger);
 
 app.get("/", (req, res) => {
   res.send("Home");
