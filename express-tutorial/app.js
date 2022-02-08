@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const logger = require("./logger.js");
 const authorize = require("./authorize.js");
+const morgan = require ("morgan");
 
 // app.use applies the middleware to all the routes
 // if we specify a path here, it becomes the root of the path that invokes the middleware function
@@ -12,8 +13,25 @@ const authorize = require("./authorize.js");
 
 // When path ommited, middleware function will be applied to all the requests
 
+// Middlewares :
+// 1.written yourself
+// 2.Express middleware
+// 3.External, thrid party middleware
+
+
 // use multiple middleware functions, order is important, executed based on order
-app.use(logger);
+// app.use([logger, authorize]);
+
+// 1. Middleware type 1, written by yourself
+// app.use(logger);
+
+//  2. Middleware type 2, Express middleware
+// app.use(express.static("./public"));
+
+// 3. Middleware tyoe 3, Third party middleware
+app.use(morgan("tiny"));
+
+
 
 app.get("/", (req, res) => {
   // const {name, id} = req.user;
@@ -33,7 +51,7 @@ app.get("/api/products", (req, res) => {
 });
 
 // only authorize on the /api/items route
-app.get("/api/items", authorize, (req, res) => {
+app.get("/api/items", (req, res) => {
   res.send("Items");
 });
 
