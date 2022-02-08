@@ -13,18 +13,18 @@ const authorize = require("./authorize.js");
 // When path ommited, middleware function will be applied to all the requests
 
 // use multiple middleware functions, order is important, executed based on order
-app.use([logger ,authorize]);
+app.use(logger);
 
 app.get("/", (req, res) => {
-  const {name, id} = req.user;
-  console.log("Name: " + name + " ID: " + id);
+  // const {name, id} = req.user;
+  // console.log("Name: " + name + " ID: " + id);
 
   res.send("Home");
 });
 
 app.get("/about", (req, res) => {
   // Access user obj attached to req obj in authorize middleware
-  console.log(req.user);
+  // console.log(req.user);
   res.send("About");
 });
 
@@ -32,7 +32,8 @@ app.get("/api/products", (req, res) => {
   res.send("Products");
 });
 
-app.get("/api/items", (req, res) => {
+// only authorize on the /api/items route
+app.get("/api/items", authorize, (req, res) => {
   res.send("Items");
 });
 
