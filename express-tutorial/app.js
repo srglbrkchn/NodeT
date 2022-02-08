@@ -16,10 +16,15 @@ const authorize = require("./authorize.js");
 app.use([logger ,authorize]);
 
 app.get("/", (req, res) => {
+  const {name, id} = req.user;
+  console.log("Name: " + name + " ID: " + id);
+
   res.send("Home");
 });
 
 app.get("/about", (req, res) => {
+  // Access user obj attached to req obj in authorize middleware
+  console.log(req.user);
   res.send("About");
 });
 
