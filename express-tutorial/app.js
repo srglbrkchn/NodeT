@@ -8,15 +8,25 @@ let {people} = require("./data");
 // static assets
 app.use(express.static("./methods-public"));
 
-// parse form data
+// parse form data; attatch it to req.body
 app.use(express.urlencoded({extended:false}));
+
+// parse json; attach data sent by js to req.body for use
+// straight up http request, sent by js
+app.use(express.json());
 
 app.get("/api/people", (req, res) => {
   res.status(200).json({success:true, data:people});
 });
 
 app.post("/api/people", (req, res) => {
-   
+  const {name} = req.body;
+
+  if(!name) {
+    return(res.status(400).json({success:false, msg: "Please provide name value."}));
+  }else {
+    return(res.status(201).json({success:true, person:name}));
+  }
 });
 
 
