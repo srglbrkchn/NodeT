@@ -3,7 +3,13 @@
 const express = require("express");
 const app = express();
 
-let {people} = require("./data");
+
+// Set up the peopel router
+const people = require("./routes/people");
+
+// Set up auth router
+const auth = require("./routes/auth");
+
 
 // static assets
 app.use(express.static("./methods-public"));
@@ -15,83 +21,11 @@ app.use(express.urlencoded({extended:false}));
 // straight up http request, sent by js
 app.use(express.json());
 
-app.get("/api/people", (req, res) => {
-  res.status(200).json({success:true, data:people});
-});
+// for the path that starts with "/api/people", I wanna use people router, imported from ./routes folder, ppl file
+app.use("/api/people", people);
 
-app.post("/api/people", (req, res) => {
-  const {name} = req.body;
-
-  if(!name) {
-    return(res.status(400).json({success:false, msg: "Please provide name value."}));
-  }else {
-    return(res.status(201).json({success:true, person:name}));
-  }
-});
-
-app.post("/api/postman/people", (req, res) => {
-  const {name} = req.body;
-
-  if(!name) {
-    return(res.status(400).json({success:false, msg: "Please provide a name."}));
-  }else{
-    return(res.status(201).json({success:true, data: [...people, name]}));
-  }
-});
-
-// put method for update
-app.put("/api/people/:id", (req, res) => {
-  const {id} = req.params;
-  const {name} = req.body;
-  const person = people.find((person)=> {
-    if(person.id === Number(id)){
-      return person;
-    }
-  });
-
-  if(!person) {
-    res.status(404)
-    .json({success:false, msg:`No person with ID: ${id} exists.`});
-  }
-    const newPeople = people.map((person)=> {
-      if(person.id === Number(id)) {
-        person.name = name;
-        return person;
-      }else {
-        return person;
-      }
-    });
-  res.status(200).json({success:true, data: newPeople});
-});
-
-app.delete("/api/people/:id", (req, res) => {
-  const {id} = req.params;
-  const person = people.find((person)=> {
-    if(person.id === Number(id)){
-      return person;
-    }
-  });
-
-  if(!person) {
-    res.status(404).json({success:false, msg: `Person with ID ${id} does not exists`});
-  }
-
-  const newPeople = people.filter((person)=> {
-      return person.id !== Number(id);
-  });
-  res.status(200).json({success:true, data:newPeople});
-});
-
-
-app.post("/login", (req, res) => {
-  const {name} = req.body;
-  if(name) {
-    res.status(200).send(`Welcome ${name}.`);
-  }else{
-    res.status(401).send("Please provide credentials.");
-  }
-
-});
+// for the path starts with "/login" , use auth router
+app.use("/login", auth);
 
 
 app.listen(3000, () => {
