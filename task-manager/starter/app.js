@@ -6,13 +6,11 @@ const connectDB = require("./db/connect.js");
 require("dotenv").config();
 
 // middleware
+app.use(express.static("./public"));
 app.use(express.json());
 
 
-// Routes
-app.get("/hello", (req, res)=> {
-  res.send("Hello World!!");
-});
+// Routes 
 
 //  /api/v1/tasks => root route for the tasks router
 app.use("/api/v1/tasks", tasks);
