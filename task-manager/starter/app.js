@@ -4,16 +4,21 @@ const port = 3000;
 const tasks = require("../routes/tasks.js");
 const connectDB = require("./db/connect.js");
 require("dotenv").config();
+const notFound = require("./middleware/not-found.js");
 
 // middleware
 app.use(express.static("./public"));
 app.use(express.json());
 
 
-// Routes 
+// Routes
 
 //  /api/v1/tasks => root route for the tasks router
 app.use("/api/v1/tasks", tasks);
+
+// Build up custom 404 response
+app.use(notFound);
+
 
 const start = async ()=> {
   try {
